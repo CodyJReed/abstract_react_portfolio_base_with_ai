@@ -1,13 +1,24 @@
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
+
 const Contact = () => {
+  const [isContactOpen, setIsContactOpen] = useState(false)
+
   return (
     <section id="contact" className="section-padding">
       <div className="container-max">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-12 gradient-text">Get In Touch</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-12">
-            I'm always interested in hearing about new opportunities and exciting projects. 
-            Let's work together to bring your ideas to life!
-          </p>
+                      <p className="text-xl text-gray-600 dark:text-gray-300 mb-12">
+              I'm always interested in hearing about new opportunities and exciting projects. 
+              Let's work together to bring your ideas to life!
+            </p>
+            <button
+              onClick={() => setIsContactOpen(true)}
+              className="mb-8 bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200"
+            >
+              Send Me a Message
+            </button>
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md">
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
@@ -57,6 +68,96 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+      {/* Contact Form Modal */}
+      <Transition appear show={isContactOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-50" onClose={() => setIsContactOpen(false)}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4"
+                  >
+                    Get In Touch
+                  </Dialog.Title>
+                  <form className="space-y-4">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        rows={4}
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                        placeholder="Your message..."
+                      />
+                    </div>
+                    <div className="flex justify-end space-x-3">
+                      <button
+                        type="button"
+                        onClick={() => setIsContactOpen(false)}
+                        className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      >
+                        Send Message
+                      </button>
+                    </div>
+                  </form>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </section>
   )
 }
